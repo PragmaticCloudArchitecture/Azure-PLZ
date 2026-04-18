@@ -1,0 +1,11 @@
+# tf-platform-connectivity code owners
+# For GitHub PR enforcement, consolidate into .github/CODEOWNERS at the
+# repository root, prefixed with /platform/connectivity/.
+
+# Platform team owns all connectivity files
+* @platform-engineering
+
+# Hub network addressing and firewall config — high blast-radius changes
+main.tf     @platform-engineering @security-review
+locals.tf   @platform-engineering @security-review
+backend.tf  @platform-engineering @security-review
