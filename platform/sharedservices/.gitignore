@@ -1,0 +1,26 @@
+# Terraform working directory
+.terraform/
+.terraform.lock.hcl
+
+# State files
+*.tfstate
+*.tfstate.*
+
+# Plan artifacts
+*.tfplan
+
+# Crash logs
+crash.log
+
+# Override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Backend config files (contain storage account names — keep out of source control)
+*.backend.hcl
+
+# tfvars (may contain subscription IDs and sensitive values)
+*.tfvars
+!terraform.tfvars.example

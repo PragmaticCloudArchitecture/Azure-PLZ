@@ -1,0 +1,11 @@
+# tf-platform-sharedservices code owners
+# For GitHub PR enforcement, consolidate into .github/CODEOWNERS at the
+# repository root, prefixed with /platform/sharedservices/.
+
+# Platform team owns all shared services files
+* @platform-engineering
+
+# Key Vault config — high blast-radius changes affect secret access for all consumers
+main.tf      @platform-engineering @security-review
+locals.tf    @platform-engineering @security-review
+variables.tf @platform-engineering @security-review
