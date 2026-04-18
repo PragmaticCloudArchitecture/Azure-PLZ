@@ -1,0 +1,107 @@
+# tf-platform-governance — example variable values
+# Copy this file to terraform.tfvars and fill in real values before running.
+# Never commit terraform.tfvars to source control — it is gitignored.
+
+# Primary Azure region for policy UAMIs and region-scoped resources.
+location = "eastus"
+
+# ---------------------------------------------------------------------------
+# Platform subscription IDs
+# Replace with your actual subscription GUIDs.
+# ---------------------------------------------------------------------------
+management_subscription_id   = "00000000-0000-0000-0000-000000000001"
+connectivity_subscription_id = "00000000-0000-0000-0000-000000000002"
+identity_subscription_id     = "00000000-0000-0000-0000-000000000003"
+
+# ---------------------------------------------------------------------------
+# Telemetry wiring
+# Provide after tf-platform-monitoring is applied.
+# Leave empty on first bootstrap — policy assignments will deploy without the
+# LAW parameter set, which is safe for the initial hierarchy creation pass.
+# ---------------------------------------------------------------------------
+law_resource_id                = ""
+automation_account_resource_id = ""
+
+# ---------------------------------------------------------------------------
+# ALZ library pin
+# Treat upgrades as deliberate change events — bump this intentionally and
+# review the ALZ library release notes before applying.
+# ---------------------------------------------------------------------------
+alz_library_ref = "2026.01.3"
+
+# ---------------------------------------------------------------------------
+# Management group settings
+# ---------------------------------------------------------------------------
+default_management_group_name            = "alz-sandboxes"
+require_authorization_for_group_creation = true
+
+# Set true only when adopting an existing tenant hierarchy. Leaving false on
+# a fresh tenant prevents accidental adoption of stale management group state.
+update_existing_management_groups = false
+
+# Prevents subscriptions from returning to tenant root on destroy.
+subscription_placement_destroy_behavior = "intermediate_root"
+
+# ---------------------------------------------------------------------------
+# Optional: additional subscription placements
+# Add subscriptions beyond the default management/connectivity/identity set.
+# ---------------------------------------------------------------------------
+# additional_subscription_placement = {
+#   example_corp_app = {
+#     subscription_id       = "00000000-0000-0000-0000-000000000010"
+#     management_group_name = "corp"
+#   }
+#   example_online_app = {
+#     subscription_id       = "00000000-0000-0000-0000-000000000011"
+#     management_group_name = "online"
+#   }
+# }
+
+# ---------------------------------------------------------------------------
+# Optional: platform team RBAC
+# Set the principal_id to the Object ID of your platform engineering group.
+# ---------------------------------------------------------------------------
+# management_group_role_assignments = {
+#   platform_owners = {
+#     management_group_name      = "platform"
+#     role_definition_id_or_name = "Owner"
+#     principal_id               = "00000000-0000-0000-0000-000000000020"
+#     principal_type             = "Group"
+#   }
+#   lz_readers = {
+#     management_group_name      = "landingzones"
+#     role_definition_id_or_name = "Reader"
+#     principal_id               = "00000000-0000-0000-0000-000000000021"
+#     principal_type             = "Group"
+#   }
+# }
+
+# ---------------------------------------------------------------------------
+# Optional: DDoS protection plan
+# Leave empty if not using the Network Protection tier.
+# ---------------------------------------------------------------------------
+ddos_protection_plan_id = ""
+
+# ---------------------------------------------------------------------------
+# Optional: policy assignment overrides
+# Example: tighten Key Vault secret expiry on the landingzones MG.
+# ---------------------------------------------------------------------------
+# policy_assignments_to_modify = {
+#   landingzones = {
+#     policy_assignments = {
+#       Enforce-GR-KeyVault = {
+#         enforcement_mode = "Default"
+#         identity         = "SystemAssigned"
+#         parameters = {
+#           secretsValidityInDays = jsonencode({ value = 120 })
+#         }
+#       }
+#     }
+#   }
+# }
+
+# ---------------------------------------------------------------------------
+# Telemetry opt-out
+# Set false in regulated or air-gapped tenants.
+# ---------------------------------------------------------------------------
+enable_telemetry = true

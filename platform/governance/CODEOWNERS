@@ -1,0 +1,14 @@
+# tf-platform-governance code owners
+# These patterns enforce mandatory review from the platform engineering team
+# on all files that control tenant-wide blast radius.
+#
+# Note: For GitHub PR enforcement, consolidate into .github/CODEOWNERS at
+# repository root, prefixed with /platform/governance/.
+
+# Platform team owns all governance files
+* @platform-engineering
+
+# Tenant-root and hierarchy config — requires additional security review
+main.tf            @platform-engineering @security-review
+backend.tf         @platform-engineering @security-review
+lib/               @platform-engineering @security-review

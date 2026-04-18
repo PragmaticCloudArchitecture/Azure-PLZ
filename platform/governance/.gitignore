@@ -1,0 +1,26 @@
+# ALZ provider go-getter cache — populated at terraform init, must not be committed
+.alzlib/
+
+# Terraform working directory
+.terraform/
+.terraform.lock.hcl
+
+# State files
+*.tfstate
+*.tfstate.*
+
+# Plan artifacts
+*.tfplan
+
+# Crash logs
+crash.log
+
+# Override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Environment variable files that may contain secrets
+*.tfvars
+!terraform.tfvars.example
