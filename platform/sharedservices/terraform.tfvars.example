@@ -1,0 +1,66 @@
+# tf-platform-sharedservices — example variable values
+# Copy this file to terraform.tfvars and fill in real values.
+# Never commit terraform.tfvars — it is gitignored.
+
+# ---------------------------------------------------------------------------
+# Identity and authentication (OIDC — no client secrets)
+# ---------------------------------------------------------------------------
+sharedservices_subscription_id = "11111111-1111-1111-1111-111111111111"
+tenant_id                      = "22222222-2222-2222-2222-222222222222"
+client_id                      = "33333333-3333-3333-3333-333333333333"
+
+# ---------------------------------------------------------------------------
+# Deployment location and environment
+# ---------------------------------------------------------------------------
+location    = "westeurope"
+environment = "prod"
+prefix      = "contoso"
+
+# ---------------------------------------------------------------------------
+# Key Vault
+# Must be globally unique, 3-24 alphanumeric+hyphen characters.
+# ---------------------------------------------------------------------------
+keyvault_name                       = "kv-contoso-prod-001"
+keyvault_sku                        = "standard"
+keyvault_purge_protection_enabled   = true
+keyvault_soft_delete_retention_days = 90
+
+# Allow public access for break-glass when no private endpoint is available.
+# Set to false in production when private_endpoint_subnet_id is configured.
+keyvault_public_network_access_enabled = false
+
+# Allowed IP ranges through the KV firewall (empty = deny all except AzureServices).
+keyvault_ip_rules = []
+
+# ---------------------------------------------------------------------------
+# Private endpoint
+# Provide the resource ID of a PE subnet in the hub VNet (or a dedicated
+# shared services VNet peered to the hub).
+# ---------------------------------------------------------------------------
+# private_endpoint_subnet_id = "/subscriptions/11111111.../resourceGroups/rg-plat-conn-prod-westeurope/providers/Microsoft.Network/virtualNetworks/vnet-plat-conn-prod-westeurope/subnets/pe-subnet"
+
+# ---------------------------------------------------------------------------
+# Monitoring integration
+# Option A: Read LAW ID from tf-platform-monitoring remote state (production path)
+# ---------------------------------------------------------------------------
+tfstate_rg = "rg-tfstate-prod"
+tfstate_sa = "sttfstateprod001"
+# log_analytics_workspace_id   = null   # omit to use remote state
+# keyvault_private_dns_zone_id = null   # omit to use remote state from connectivity
+
+# Option B: Pass values directly (CI pipelines that read remote state externally)
+# log_analytics_workspace_id   = "/subscriptions/11111111.../resourceGroups/rg-management/providers/Microsoft.OperationalInsights/workspaces/law-mgmt-prod"
+# keyvault_private_dns_zone_id = "/subscriptions/11111111.../resourceGroups/rg-plat-conn-prod-westeurope/providers/Microsoft.Network/privateDnsZones/privatelink.vaultcore.azure.net"
+
+# ---------------------------------------------------------------------------
+# Telemetry
+# ---------------------------------------------------------------------------
+enable_telemetry = true
+
+# ---------------------------------------------------------------------------
+# Tags
+# ---------------------------------------------------------------------------
+tags = {
+  costcenter  = "CC-0100"
+  landingzone = "platform-sharedservices"
+}
