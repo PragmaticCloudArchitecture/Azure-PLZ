@@ -1,0 +1,13 @@
+# tf-subscription-vending code owners
+# For GitHub PR enforcement, consolidate into .github/CODEOWNERS at the
+# repository root, prefixed with /platform/subscription-vending/.
+
+# Platform team owns all subscription vending files
+* @platform-engineering
+
+# Billing scope configuration — changes affect all new subscription creation
+variables.billing.tf @platform-engineering @finops-review
+
+# Management group placement and role assignments — high blast-radius
+variables.governance.tf  @platform-engineering @security-review
+main.tf                  @platform-engineering @security-review
